@@ -1,0 +1,65 @@
+title: Quasar RAT detector (Sysmon).
+description: Quasar is an open-source RAT that is readily available on GitHub and has been used by the hackers as far back in October 2015..
+author: Alexandr Yampolskyi, SOC Prime
+references:
+- https://www.welivesecurity.com/wp-content/uploads/2018/07/ESET_Quasar_Sobaken_Vermin.pdf#page15
+date: 2018/06/01
+status: testing
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: "1"
+    file_hash:
+    - 0A4915B81D9A9ACF4E19181DEEEBBE244430C16B
+    - 323160C88A254127D9ADB2848AE044AFFF376A4D
+    - 395166835495B418773C9690227779D592F94F71
+    - 3EE410DD50FC64F39DFF0C4EE8CC676F0F7D5A74
+    - 5B665152F6596D4412267F9C490878455BA235F9
+    - 5FE8558EB8A3C244BE2DA8BE750221B9A9EE8539
+    - 61CB5E535F0AC90A1F904EC9937298F50E2B4974
+    - 6A1CD05F07B1024287CEA400237E1EA9D2FE1678
+    - 7676AFF05A3550E5BBFF78CF4D10C9E094447D72
+    - 86165F464EC1912A43445D80559D65C165E2CF76
+    - AB3CD05BE6B0BA8567B84D10EDE28ABF87E115AC
+    - BFD7158E1C2F6BA525E24F85ED8CCF8EF40FD370
+    - CFEBEFC92DCDF1687FD0BC1B50457EBDEA8672A2
+    - D21B8514990B0CEAC5EAE687DEAA60B447139B9D
+---
+logsource:
+  product: firewall
+detection:
+  selectionSRC:
+    SourceIP:
+    - 188.227.75.189
+  selection1DST:
+    DestinationIP:
+    - 188.227.75.189
+---
+logsource:
+  product: proxy
+detection:
+  selectionURL:
+    Request Url:
+    - http://chimachinenow.com
+    - http://highlandfamily.org
+    - http://intra.cfecgcaquitaine.com
+    - http://motifahsap.com
+    - http://sittalhaphedver.com
+    - http://wassronledorhad.in
+    - http://balzantruck.com
+    - http://185.176.221.54
+  condition: selection or selectionSRC or selection1DST or selectionURL
+fields:
+- Image
+- TargetObject
+- Hashes
+falsepositives:
+- Unknown
+level: high
+mitre-attack:
+  Execution:
+  - User Execution
+  Command and Control:
+  - Standard Application Layer Protocol
