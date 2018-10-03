@@ -1,0 +1,73 @@
+title: FlawedAmmyy RAT Detection.
+description: FlawedAmmyy RAT Detection.
+author: Alexandr Yampolskyi, SOC Prime
+references:
+- https://www.proofpoint.com/us/threat-insight/post/leaked-source-code-ammyy-admin-turned-flawedammyy-rat
+date: 2018/03/07
+status: testing
+logsource:
+  product: proxy
+detection:
+  selection1:
+    Request Url:
+    - http://chimachinenow.com
+    - http://highlandfamily.org
+    - http://intra.cfecgcaquitaine.com
+    - http://motifahsap.com
+    - http://sittalhaphedver.com
+    - http://wassronledorhad.in
+    - http://balzantruck.com
+    - http://185.176.221.54
+---
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection2:
+    EventID: "1"
+    file_hash:
+    - 18436342cab7f1d078354e86cb749b1de388dcb4d1e22c959de91619947dfd63
+	- d82ca606007be9c988a5f961315c3eed1b12725c6a39aa13888e693dc3b9a975
+	- 8903d514549aa9568c7fea0123758b954b9703c301b5e4941acb33cccd0d7c57
+	- 2b53466eebd2c65f81004c567df9025ce68017241e421abcf33799bd3e827900
+	- 0d100ff26a764c65f283742b9ec9014f4fd64df4f1e586b57f3cdce6eadeedcd
+	- 9a7fb98dd4c83f1b4995b9b358fa236969e826e4cb84f63f4f9881387bc88ccf
+	- b0ad80bf5e28e81ad8a7b13eec9c5c206f412870814d492b78f7ce4d574413d2
+	- cafa3466e422dd4256ff20336c1a032bbf6e915f410145b42b453e2646004541
+	- 404d3d65430fbbdadedb206a29e6158c66a8efa2edccb7e648c1dd017de47572
+	- cc0205845562e017ff8b3aafb17de167529d113fc680e07ee9d8753d81487b2f
+	- 790e7dc8b2544f1c76ff95e56315fee7ef3fe623975c37d049cc47f82f18e4f2
+	- 2d19c42f753dcee5b46344f352c11a1c645f0b77e205c218c985bd1eb988c7ce
+	- 6e701670350b4aea3d2ead4b929317b0a6d835aa4c0331b25d65ecbfbf8cb500
+	- 3cd39abdbeb171d713ee8367ab60909f72da865dbb3bd858e4f6d31fd9c930d0
+	- 1f5d31d41ebb417d161bc49d1c50533fcbff523bb583883b10b14974a3de8984
+	- 6877ac35a3085d6c10fa48655cf9c2399bd96c3924273515eaf89b511bbe356a
+	- 059c0588902be3e8a5d747df9e91f65cc50d908540bdeb08acf15242cc9a25b5
+	- c8b202e5a737b8b5902e852de730dbd170893f146ab9bbc9c06b0d93a7625e85
+	- 927fa5fea13f8f3c28e307ffea127fb3511b32024349b39bbaee63fac8dcded7
+	- 6048a55de1350238dfc0dd6ebed12ddfeb0a1f3788c1dc772801170756bf15c7
+	- adfdead4419c134f0ab2951f22cfd4d5a1d83c0abfe328ae456321fccf241eb6
+	- 022f662903c6626fb81e844f7761f6f1cbaa6339e391468b5fbfb6d0a1ebf8cb
+	- 3f5f5050adcf0d0894db64940299ac07994c4501b361dce179e3d45d9d155adf
+	- cafa3466e422dd4256ff20336c1a032bbf6e915f410145b42b453e2646004541
+	---
+logsource:
+  product: firewall
+detection:
+  incoming:
+    src:
+    - 179.60.146.3
+	- 194.165.16.11
+  outgoing:
+    dst:
+    - 179.60.146.3
+	- 194.165.16.11
+  condition: selection1 or selection2 or incoming or outgoing
+falsepositives:
+- Unknown
+level: medium
+mitre-attack:
+  Execution:
+  - User Execution
+  Command and Control:
+  - Standard Application Layer Protocol
