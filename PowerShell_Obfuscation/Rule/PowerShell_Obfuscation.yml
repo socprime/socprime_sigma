@@ -1,0 +1,70 @@
+title: PowerShell Obfuscation Using SecureString.
+description: Detects PowerShell Obfuscation Using SecureString.
+author: Alexandr Yampolskyi, SOC Prime
+references:
+- https://threatvector.cylance.com/en_us/home/unpacking-a-packer-powershell-obfuscation-using-securestring.html
+date: 2018/09/12
+status: testing
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: "1"
+    file_hash:
+    - 50e7fe23731ad94f1714c1a8acfce3f8b6e6e918b3e3aa1daa7275cb6052e68c
+    - f3cf988a64c1732b6b58a72922e93d182ba64298f6beae5de0c8de21477a9474
+---
+logsource:
+  product: firewall
+detection:
+  selectionSRC:
+    SourceIP:
+    - 149.129.220.242
+    - 161.117.9.13
+    - 212.92.98.68
+    - 46.21.248.199
+    - 47.74.189.69
+    - 78.155.206.114
+    - 85.119.150.167
+    - 92.53.66.244
+    - 92.53.77.108
+    - 95.179.138.241
+    - 95.213.195.213
+    - 95.213.199.244
+  selectionDST:
+    DestinationIP:
+    - 149.129.220.242
+    - 161.117.9.13
+    - 212.92.98.68
+    - 46.21.248.199
+    - 47.74.189.69
+    - 78.155.206.114
+    - 85.119.150.167
+    - 92.53.66.244
+    - 92.53.77.108
+    - 95.179.138.241
+    - 95.213.195.213
+    - 95.213.199.244
+---
+logsource:
+  product: proxy
+detection:
+  selectionURL:
+    Request Url:
+    - Ravigel.com
+    - Siberponis.com
+    - Baferdifo.com
+  condition: selection or selectionSRC or selectionDST or selectionURL
+fields:
+- Image
+- TargetObject
+- Hashes
+falsepositives:
+- Unknown
+level: high
+mitre-attack:
+  Execution:
+  - User Execution
+  Command and Control:
+  - Standard Application Layer Protocol
