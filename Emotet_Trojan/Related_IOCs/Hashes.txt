@@ -1,0 +1,6 @@
+Malicious document (W2KM_POWLOAD.AUSJTM)
+455be9278594633944bfdada541725a55e5ef3b7189ae13be8b311848d473b53
+Dropper sample (TSPY_EMOTET.SMD10)
+fbff242aeeff98285e000ef03cfa96e87d6d63c41080d531edcb455646b64eec
+Malicious macro (W2KM_EMOTET.DG)
+3f75ee07639bbcebf9b904debae1b40ae1e2f2cbfcef44caeda21a9dae71c982
