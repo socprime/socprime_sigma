@@ -1,0 +1,79 @@
+title: Cobalt Strike.
+description: Cobalt Strike.
+author: Alexandr Yampolskyi, SOC Prime
+references:
+    - https://twitter.com/ItsReallyNick/status/1009456751530463234
+	- https://www.cyberark.com/threat-research-blog/red-team-insights-https-domain-fronting-google-hosts-using-cobalt-strike/
+	- https://www.vmray.com/analyses/cobalt-strike-beacon-hta-analysis/report/overview.html
+	- http://threatexpress.com/2018/02/automating-cobalt-strike-profiles-apache-mod_rewrite-htaccess-files-intelligent-c2-redirection/
+	- https://blog.cobaltstrike.com/2018/04/09/cobalt-strike-3-11-the-snake-that-eats-its-tail/
+	- https://www.riskiq.com/blog/labs/cobalt-group-spear-phishing-russian-banks/
+date: 2018/06/19
+status: testing
+logsource:
+  category: proxy
+detection:
+  selection1:
+    UserAgent:
+    - Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko
+    - Mozilla/5.0 (Windows; U; MSIE 7.0; Windows NT 5.2) Java/1.5.0_08
+    - Mozilla/5.0 (Windows NT 6.3; rv:39.0) Gecko/20100101 Firefox/35.0
+    - Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko
+---
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection2:
+    EventID: "1"
+    file_hash:
+    - 638b7b0536217c8923e856f4138d9caff7eb309d
+    - d30e8c7543adbc801d675068530b57d75cabb13f
+    - 973b1ca8661be6651114edf29b10b31db4e218f7
+    - 691686839681adb345728806889925dc4eddb74e
+    - 3cf4b44c9470fb5bd0c16996c4b2a338502a7517
+    - d8ef1c4f64a05b1abf100044fcb7048c9526d175a114cb90bd134b80783da146
+    - 5620e52094d75d3d8c47d4daade74fa45301e347
+    - ad3b4198ce49b70d8bb804daf9741660 
+    - 2e0cc6890fbf7a469d6c0ae70b5859e7
+    - f360d41a0b42b129f7f0c29f98381416
+    - d46df9eacfe7ff75e098942e541d0f18
+---
+logsource:
+  product: firewall
+detection:
+  selection3:
+    SourceIP:
+    - 46.102.152.157
+    - 85.204.74.117
+    - 46.21.147.61
+    - 139.60.163.10
+    - 138.68.234.128
+    - 104.144.207.207
+    - 46.101.141.96
+  selection4:
+    DestinationIP:
+    - 46.102.152.157
+    - 85.204.74.117
+    - 46.21.147.61
+    - 139.60.163.10
+    - 138.68.234.128
+    - 104.144.207.207
+    - 46.101.141.96
+  condition: selection1 or selection2 or selection3 or selection4
+fields:
+- ClientIP
+- URL
+- UserAgent
+- Image
+- User
+- TargetObject
+- Hashes
+falsepositives:
+- Unknown
+level: high
+mitre-attack:
+  Command and Control:
+  - Standard Application Layer Protocol
+  Execution:
+  - User Execution
