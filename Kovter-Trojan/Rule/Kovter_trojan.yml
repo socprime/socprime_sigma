@@ -1,0 +1,42 @@
+title: Kovter Trojan detector (Sysmon).
+description: Kovter is a pervasive click-fraud trojan that uses a fileless persistence mechanism to maintain a foothold in an infected system and thwart traditional antivirus software.
+author: Alexandr Yampolskyi, SOC Prime
+references:
+- https://threatvector.cylance.com/en_us/home/threat-spotlight-kovter-malware-fileless-persistence-mechanism.html
+date: 2018/01/23
+status: testing
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: "1"
+    file_hash:
+#JavaScript 1st Stage
+    - 399c2d44799d6a9e372e442ebcc2db50863aa28d77dce56ca6015352844e2b21
+#Main Payload PE
+	- f5be23df0cfd529674c9939bf11e4d0f61693f898cf989e7b7acf62202c0874e
+---
+logsource:
+  product: proxy
+detection:
+  selectionURL:
+    Request Url:
+    - http://steuer-wirtschaft-recht.de/modules/mod_login/counter
+    - http://ikincielesyaevi.com/wp-admin/includes/counter
+    - http://demirbasetiketi.net/wp-content/uploads/2017/03/counter
+    - http://ronakco.com/media/com_jnews/modules/skin/counter
+    - http://gokcentunc.com/wp-includes/images/crystal/counter
+  condition: selection or selectionURL
+fields:
+- Image
+- TargetObject
+- Hashes
+falsepositives:
+- Unknown
+level: high
+mitre-attack:
+  Execution:
+  - User Execution
+  Command and Control:
+  - Standard Application Layer Protocol
