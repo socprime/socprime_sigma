@@ -1,0 +1,4 @@
+Cylance came across the malware file under analysis, which uses a rare PowerShell obfuscation method, while looking into some fresh and poorly detected malicious scripts. The sample appeared to use several techniques described by Daniel Bohannon. The file we analyzed was a ZIP file containing both a PDF document and VBS script:
+50e7fe23731ad94f1714c1a8acfce3f8b6e6e918b3e3aa1daa7275cb6052e68c
+When decoded, the binary payload had the hash:
+f3cf988a64c1732b6b58a72922e93d182ba64298f6beae5de0c8de21477a9474
