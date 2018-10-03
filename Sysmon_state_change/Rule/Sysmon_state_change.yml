@@ -1,0 +1,16 @@
+title: Sysmon modification detector.
+description: Detects sysmon state and configuration change.
+author: Alexandr Yampolskyi, SOC Prime
+status: testing
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection1:
+    EventID: "4"
+  selection2:
+    EventID: "16"
+  condition: selection1 or selection2
+falsepositives:
+- Unknown
+level: high
