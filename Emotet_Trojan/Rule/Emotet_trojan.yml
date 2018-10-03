@@ -1,0 +1,74 @@
+title: Emotet Trojan detector.
+description: Malware families, Emotet (also known as Geodo) is a banking trojan written for the purpose of perpetrating fraud. It is usually distributed through large-scale spam campaigns with links to malicious word documents containing a PowerShell downloader script. Emotet is known to be bundled alongside Zeus Panda (Panda Banker), Trickbot, and IceID. Emotet is broadly targeted across all verticals so all organizations should have access to an Emotet IOC feed that is regularly updated many times per day.
+author: Alexandr Yampolskyi, SOC Prime
+references:
+- https://precisionsec.com/threat-intelligence-feeds/emotet/
+- https://blog.trendmicro.com/trendlabs-security-intelligence/new-emotet-hijacks-windows-api-evades-sandbox-analysis/#
+date: 2018/07/23
+status: testing
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: "1"
+    file_hash:
+#Malicious document (W2KM_POWLOAD.AUSJTM)
+    - 455be9278594633944bfdada541725a55e5ef3b7189ae13be8b311848d473b53
+#Dropper sample (TSPY_EMOTET.SMD10)
+    - fbff242aeeff98285e000ef03cfa96e87d6d63c41080d531edcb455646b64eec
+#Malicious macro (W2KM_EMOTET.DG)
+    - 3f75ee07639bbcebf9b904debae1b40ae1e2f2cbfcef44caeda21a9dae71c982
+---
+logsource:
+  product: firewall
+detection:
+  selectionSRC:
+    SourceIP:
+    - 164.208.152.175
+    - 66.234.34.36
+    - 62.210.86.114
+    - 162.243.154.25
+    - 37.187.57.57
+    - 94.199.242.92
+    - 178.54.33.12
+    - 136.243.202.133
+  selection1DST:
+    DestinationIP:
+    - 164.208.152.175
+    - 66.234.34.36
+    - 62.210.86.114
+    - 162.243.154.25
+    - 37.187.57.57
+    - 94.199.242.92
+    - 178.54.33.12
+    - 136.243.202.133
+---
+logsource:
+  product: proxy
+detection:
+  selectionURL:
+    Request Url:
+    - http://www.ocyoungactors.com
+    - http://inicjatywa.edu.pl
+    - http://mironovka-school.ru
+    - http://www.brands2life.b2ldigitalprojects.com
+    - http://baute.org
+    - http://impulsetechnocast.com
+    - http://spprospekt.com.br
+    - http://pixy7.com
+    - http://phoxart.com
+    - http://panbras.com.br
+  condition: selection or selectionSRC or selection1DST or selectionURL
+fields:
+- Image
+- TargetObject
+- Hashes
+falsepositives:
+- Unknown
+level: high
+mitre-attack:
+  Execution:
+  - User Execution
+  Command and Control:
+  - Standard Application Layer Protocol
