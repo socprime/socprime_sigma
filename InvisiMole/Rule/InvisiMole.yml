@@ -1,0 +1,112 @@
+title: InvisiMole SpyWare Detector.
+description: InvisiMole SpyWare Detector.
+author: Alexandr Yampolskyi, SOC Prime
+references:
+- https://github.com/eset/malware-ioc/tree/master/invisimole
+date: 2018/06/07
+status: testing
+logsource:
+  product: proxy
+detection:
+  selection1:
+    Request Url:
+    - activationstate.sytes.net
+    - advstatecheck.sytes.net
+    - akamai.sytes.net
+    - statbfnl.sytes.net
+    - updchecking.sytes.net
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection2:
+    EventID: "1"
+    file_hash:
+    - 5EE6E0410052029EAFA10D1669AE3AA04B508BF9
+    - 2FCC87AB226F4A1CC713B13A12421468C82CD586
+    - B6BA65A48FFEB800C29822265190B8EAEA3935B1
+    - C8C4B6BCB4B583BA69663EC3AED8E1E01F310F9F
+    - A5A20BC333F22FD89C34A532680173CBCD287FF8
+  selection_registry1:
+    EventID: "13"
+    TargetObject:
+    - HKEY_CURRENT_USER\Software\Microsoft\IE\Cache
+    keywords:
+	- Index
+  selection_registry2:
+    EventID: "13"
+    TargetObject:
+    - HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Console
+    - HKEY_CURRENT_USER\Software\Microsoft\Direct3D
+    keywords:
+	- Settings
+	- Type
+  selection_registry3:
+    EventID: "13"
+    TargetObject:
+    - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\OLE
+    - HKEY_CURRENT_USER\Software\Microsoft\Direct3D
+    keywords:
+    - Common
+    - Current
+    - ENC
+    - FFLT
+    - Flag1
+    - FlagLF
+    - FlagLF2
+    - IfData
+    - INFO
+    - InstallA
+    - InstallB
+    - LegacyImpersonationNumber
+    - LM
+    - MachineAccessStateData
+    - MachineState*
+    - RPT
+    - SP2
+    - SP3
+    - SettingsMC
+    - SettingsSR1
+    - SettingsSR2
+    EventType: SetValue
+---
+logsource:
+  product: firewall
+detection:
+  incoming:
+    src:
+    - 46.165.231.85
+    - 213.239.220.41
+    - 46.165.241.129
+    - 46.165.241.153
+    - 78.46.35.74
+    - 95.215.111.109
+    - 185.118.66.163
+    - 185.118.67.233
+    - 185.156.173.92
+    - 46.165.230.241
+    - 194.187.249.157
+  outgoing:
+    dst:
+    - 46.165.231.85
+    - 213.239.220.41
+    - 46.165.241.129
+    - 46.165.241.153
+    - 78.46.35.74
+    - 95.215.111.109
+    - 185.118.66.163
+    - 185.118.67.233
+    - 185.156.173.92
+    - 46.165.230.241
+    - 194.187.249.157
+  condition: selection1 or selection2 or selection_registry1 or selection_registry2 or selection_registry3 or incoming or outgoing
+falsepositives:
+- Unknown
+level: medium
+mitre-attack:
+  Defense Evasion:
+  - Modify Registry
+  Execution:
+  - User Execution
+  Command and Control:
+  - Standard Application Layer Protocol
