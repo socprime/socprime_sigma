@@ -1,0 +1,2 @@
+# Sobaken-RAT-Detector
+Sobaken is a heavily modified version of Quasar with fewer functionalities to make the executable smaller. However, it does come with a fewanti-sandbox and other evasion techniques.
