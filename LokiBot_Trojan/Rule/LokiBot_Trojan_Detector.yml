@@ -1,0 +1,58 @@
+title: LokiBot Trojan Detector.
+description: LokiBot Trojan Detector.
+author: Alexandr Yampolskyi, SOC Prime
+references:
+- https://www.threatfabric.com/blogs/lokibot_the_first_hybrid_android_malware.html
+- https://exchange.xforce.ibmcloud.com/botnet/lokibot
+date: 2018/03/08
+status: testing
+logsource:
+  product: proxy
+detection:
+  selection1:
+    Request Url:
+    - http://vidyutmax.com
+	- http://185.141.25.242
+	- bravest.navelr.com
+	- topstar-it.com
+	- jamespanel2018.tk
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection2:
+    EventID: "1"
+    CommandLine:
+    - "GET /bobby/"
+    - "POST /bobby/Panel/" 
+  selection3:
+    EventID: "1"
+    file_hash:
+    - 3C4BE617FDA78DA05B38F4EE52121E99
+	- 7FB5A88768D7ECE242DBD4B30EDEFF0C
+	- 14A4DFFE0105A7DEF2A1EFF32899A9AC
+	- E69245E9685CB204105E69C424F304CC
+	- 75CCD03BB4934490A9F599A15381F43D
+	- 68BEFE15006189CE8215371935F8E720
+	- 05869152534B238D25051F7718FDB382
+	- 3DFA31D85482009479FEAFD5AF7E818A
+---
+logsource:
+  product: firewall
+detection:
+  incoming:
+    src:
+    - 85.141.25.242
+  outgoing:
+    dst:
+    - 85.141.25.242
+  condition: selection1 or selection2 or selection3 or incoming or outgoing
+falsepositives:
+- Unknown
+level: medium
+mitre-attack:
+  Execution:
+  - User Execution
+  - Command-Line Interface
+  Command and Control:
+- Standard Application Layer Protocol
