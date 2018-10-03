@@ -1,0 +1,17 @@
+46.165.231.85
+213.239.220.41
+46.165.241.129
+46.165.241.153
+78.46.35.74
+95.215.111.109
+185.118.66.163
+185.118.67.233
+185.156.173.92
+46.165.230.241
+194.187.249.157
+
+activationstate.sytes.net
+advstatecheck.sytes.net
+akamai.sytes.net
+statbfnl.sytes.net
+updchecking.sytes.net
