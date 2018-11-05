@@ -1,6 +1,0 @@
-Sender IP address 	188.216.233.135 	Italy 	Vodafone Italy
-Sender HELO 	geodeticavolpe.com 	        Italy 	(protected, reseller in Italy)
-Sender HELO resolve 	62.149.128.x 	        Italy 	Aruba S.p.A.
-badnulls[.]hopto[.]org:3011
-junpio70[.]hopto[.]org
-pm2bitcoin[.]com:62103
