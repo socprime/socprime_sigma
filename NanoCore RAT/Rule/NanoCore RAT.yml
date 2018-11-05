@@ -1,0 +1,51 @@
+title: NanoCore RAT (Sysmon).
+description: NanoCore RAT Detector for Sysmon.
+status: stable
+author: Alexandr Yampolskyi, SOC Prime
+references: https://www.peerlyst.com/posts/in-memory-net-attack-nanocore-rat-slashnext
+date: 2018/04/5
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection1:
+    EventID: "1"
+    file_hash:
+    - 734910456c43436d0725ec6a13784161466097d751a91f4a4c465ce7c7bc1645
+    - beb4307d5ba3c6e209889b4bb5967dffa9cf1ca9af9eed15754e053de3321a95
+    - eb38719a61c56faf8a57eb5b8dbf7b2b4ed7a047b399713e3cc87bc4423b1be8
+    - 8e3e9fe816ab536c42d3afa009e9e1678dcd7d5838473fe056bf2440e0d14ad1
+    - ef2cab9a06f7c7c462eb100c66a589b89f4bd746f4afbcc8dab25686918f207a
+  selection2:
+    EventID: "1"
+    Image:
+    - '%UserProfile%\AppData\Roaming\Microsoft\Windows\DwiDesk\Filename.exe'
+    - '%UserProfile%\AppData\Roaming\Microsoft\Windows\DwiDesk\Filename.lnk'
+    - '%UserProfile%\AppData\Roaming\2875FAE0-D4B0-40A9-B3B4-76BF0563ACA6\AGP Service\*.exe'
+    - '%UserProfile%\AppData\Roaming\2875FAE0-D4B0-40A9-B3B4-76BF0563ACA6\Logs\%username%\KB_*randomnumber*.dat'
+    - '%UserProfile%\AppData\Roaming\2875FAE0-D4B0-40A9-B3B4-76BF0563ACA6\run.dat'
+    - '%UserProfile%\AppData\Roaming\2875FAE0-D4B0-40A9-B3B4-76BF0563ACA6\settings.dat'
+  selection_registry:
+    EventID: "13"
+    TargetObject:
+    - HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run="c:\users\*\appdata\roaming\9bc79ecb-e94e-4db2-bd38-4950445a4f10\dsl host\dslhost.exe"
+    - HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce = "c:\users\*\appdata\roaming\microsoft\windows\dwidesk\filename.lnk"
+  condition: selection1 or selection2 or selection_registry
+fields:
+- Hashes
+- Image
+falsepositives:
+- Unknown.
+level: high
+tags:
+- attack.Defense Evasion
+- attack.t1112
+- attack.t1055
+- attack.t1121
+- attack.Execution
+- attack.t1204
+- attack.t1127
+- attack.Persistence
+- attack.t1060
+- attack.Command And Control
+- attack.t1065
