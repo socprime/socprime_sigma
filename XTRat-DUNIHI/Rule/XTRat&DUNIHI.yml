@@ -1,0 +1,66 @@
+title: XTRat and DUNIHI (Sysmon).
+description: XTRat and DUNIHI Detector for Sysmon.
+status: stable
+author: Alexandr Yampolskyi, SOC Prime
+references:
+- https://blog.trendmicro.com/trendlabs-security-intelligence/xtrat-and-dunihi-backdoors-bundled-with-adwind-in-spam-mails/
+- https://www.vanimpe.eu/2015/04/16/defining-iocs-malware-analyser-tools/
+date: 2018/04/19
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection1:
+    EventID: "1"
+    file_hash:
+    - ba914359d9a3f8391fd6165bc6ee41a2
+    - 1d9264321f3f81d0b4d1e814f26904cc2a60a989
+    - 074a9e38883bf9cc0a951af0fd21052e2c85be4ff26ce213ad81e380c9c2377f
+    - 1add8a999e40c22b58ec1ac65c4a3dbdfcb163503e8cdcafbef5723f7b5293a1
+    - 1b39d9f79ef2bcbf55d3cbe8217c73077f2a8bf4b326263231bce96100fe3c19
+    - 360bae0c2eb596e9030ea4d25567389c26805c4ae34073c9aba741d51ac0a0f6
+    - 40c0532f5255e633a13dc4e5db9dda1be5a3733a152793e2d893ab8207c6acd6
+    - 7dd5566194b03b22df48af236193fb1853f6fd27205e31657440f640f85d4d76
+    - ad043adce6ada399adab8fc3e767d8292284a8b926f0a33c398825738eacf018
+    - c200fb4c0e20cf8f7e8ca58b7e8b71f5d967dc0a02938086679b9defa9171567
+    - d86fecb9ebf242dfedfbd8a062f67771c2250e542c5a6d25c9d596ad6d609793
+  selection2:
+    EventID: "1"
+    Image:
+    - '*\Temp\hes.cab'
+    - '*\Temp\kiq.cab'
+    - '*\Temp\xofam.cab'
+    - '*\Temp\hijobo.cab'
+    - '*\Temp\qok.cab'
+    - '*\Temp\mop.cab'
+    - '*\Temp\rujy.cab'
+---
+logsource:
+  product: proxy
+detection:
+  selectionURL:
+    Request Url:
+    - badnulls.hopto.org
+    - junpio70.hopto.org
+    - pm2bitcoin.com
+    - geodeticavolpe.com
+---
+logsource:
+  product: firewall
+detectionIP:
+  selection1:
+    src_ip:
+    - 188.216.233.135
+    - 62.149.128.*
+  condition: selection1 or selection2 or selectionURL or selectionIP
+fields:
+- Hashes
+- Image
+falsepositives:
+- Unknown.
+level: high
+tags:
+- attack.Execution
+- attack.t1204
+- attack.Command and Control
+- attack.t1071
