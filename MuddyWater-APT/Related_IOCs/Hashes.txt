@@ -1,4 +1,0 @@
-4121db476b66241610985350b825b9f1680d0171ab01a52b5ffcb56481521e44 	C:\Users\Public\Documents\NTSTATS.ps1
-a0abec361411cb11e01337939013bad1f54ad5865c73604a1b360d68ddfbd96a 	C:\Users\Public\Documents\NTSTATS.vbs
-b2c10621c9c901f0f692cae0306baa840105231f35e6ec36e41b88eebd46df4c 	C:\Users\Public\Documents\system.ps1
-16bcb6cc38347a722bb7682799e9d9da40788e3ca15f29e46b475efe869d0a04 	C:\Users\Public\Documents\system.vbs
