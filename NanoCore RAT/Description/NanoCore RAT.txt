@@ -1,4 +1,0 @@
-NanoCore
-Whether the original intent of NanoCore was to be a free tool for intrusions or a paid piece of software to be used legitimately is unknown.
-
-Whatever the case may be, all current versions of NanoCore appear to have all base plugins and functionality available without restriction. Between NanoCore's availability, the low $25 price point, and the free "cracked" versions found online, the use of NanoCore has spread quickly. 
