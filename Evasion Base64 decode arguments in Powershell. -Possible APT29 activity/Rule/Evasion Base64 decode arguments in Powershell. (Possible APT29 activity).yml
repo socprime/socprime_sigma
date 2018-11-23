@@ -1,0 +1,23 @@
+title: Evasion Base64 decode arguments in Powershell. (Possible APT29 activity)
+description: Powershell command included some specific obfuscation, which may indicate attempts to bypass specific detection logic.
+references:
+- https://www.fireeye.com/blog/threat-research/2018/11/not-so-cozy-an-uncomfortable-examination-of-a-suspected-apt29-phishing-campaign.html
+author: Roman Ranskyi
+status: experimental
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection0:
+    event_id: "1"
+  selection1:
+    event_data.CommandLine: \'FromBase\'+0x40+\'String\'
+  condition: selection0 and selection1
+falsepositives:
+- low
+level: high
+tags:
+- attack.Defense Evasion
+- attack.t1027
+- attack.Execution
+- attack.t1086
