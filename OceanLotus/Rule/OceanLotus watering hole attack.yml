@@ -1,0 +1,213 @@
+title: OceanLotus watering hole attack.
+description: OceanLotus watering hole attack Detector.
+author: Alexandr Yampolskyi, SOC Prime
+references: https://www.welivesecurity.com/2018/11/20/oceanlotus-new-watering-hole-attack-southeast-asia/
+date: 2018/11/20
+status: stable
+logsource:
+  product: windows
+  service: sysmon
+detection:
+  selection:
+    EventID: "1"
+    file_hash:
+    - 2194271C7991D60AE82436129D7F25C0A689050A
+    - 996D0AC930D2CDB16EF96EDC27D9D1AFC2D89CA8
+    - 1EDA0DE280713470878C399D3FB6C331BA0FADD0BD9802ED98AE06218A17F3F7
+    - 8B824BE52DE7A8723124BAD5A45664C574D6E905F300C35719F1E6988887BD62
+---
+logsource:
+  product: firewall
+detection:
+  selectionSRC:
+    src_ip:
+    - 178.128.103.24
+    - 178.128.100.189
+    - 206.189.88.50
+    - 159.65.134.146
+    - 178.128.219.207
+    - 209.97.164.158
+    - 178.128.90.102
+    - 178.128.90.109
+    - 178.128.223.102
+    - 178.128.24.201
+    - 178.128.98.139
+    - 178.128.98.89
+    - 178.128.103.74
+    - 128.28.93
+    - 209.97.164.96
+    - 178.128.103.207
+    - 206.189.85.162
+    - 159.65.7.45
+    - 178.128.103.79
+    - 178.128.107.83
+    - 178.128.103.202
+    - 104.248.144.178
+    - 104.248.144.136
+    - 206.189.95.214
+    - 159.65.137.109
+    - 178.128.209.153
+    - 159.65.129.241
+    - 128.199.159.127
+    - 128.199.159.60
+    - 206.189.89.121
+    - 206.189.47.116
+    - 178.128.90.107
+    - 142.93.75.192
+    - 159.65.128.57
+    - 178.128.90.108
+    - 142.93.127.120
+    - 142.93.75.161
+    - 178.128.28.89
+    - 206.189.145.242
+    - 178.128.90.182
+    - 142.93.71.92
+    - 159.65.137.144
+    - 178.128.90.138
+    - 142.93.116.157
+    - 178.128.90.66
+    - 178.128.90.223
+    - 142.93.75.172
+    - 178.128.103.205
+    - 178.128.107.24
+  selectionDST:
+    dst_ip:
+    - 178.128.103.24
+    - 178.128.100.189
+    - 206.189.88.50
+    - 159.65.134.146
+    - 178.128.219.207
+    - 209.97.164.158
+    - 178.128.90.102
+    - 178.128.90.109
+    - 178.128.223.102
+    - 178.128.24.201
+    - 178.128.98.139
+    - 178.128.98.89
+    - 178.128.103.74
+    - 128.28.93
+    - 209.97.164.96
+    - 178.128.103.207
+    - 206.189.85.162
+    - 159.65.7.45
+    - 178.128.103.79
+    - 178.128.107.83
+    - 178.128.103.202
+    - 104.248.144.178
+    - 104.248.144.136
+    - 206.189.95.214
+    - 159.65.137.109
+    - 178.128.209.153
+    - 159.65.129.241
+    - 128.199.159.127
+    - 128.199.159.60
+    - 206.189.89.121
+    - 206.189.47.116
+    - 178.128.90.107
+    - 142.93.75.192
+    - 159.65.128.57
+    - 178.128.90.108
+    - 142.93.127.120
+    - 142.93.75.161
+    - 178.128.28.89
+    - 206.189.145.242
+    - 178.128.90.182
+    - 142.93.71.92
+    - 159.65.137.144
+    - 178.128.90.138
+    - 142.93.116.157
+    - 178.128.90.66
+    - 178.128.90.223
+    - 142.93.75.172
+    - 178.128.103.205
+    - 178.128.107.24
+---
+logsource:
+  product: proxy
+detection:
+  selectionURL:
+    resource.URL:
+    - baotgm.net
+    - arabica.podzone.net
+    - 10cm.mypets.ws
+    - cnrp7.org
+    - utagscript.com
+    - optnmstri.com
+    - conggiaovietnam.net
+    - lcontacts.servebbs.net
+    - imgincapsula.com
+    - daichungvienvinhthanh.com
+    - sskimresources.com
+    - secure-imrworldwide.com
+    - danchimviet.info
+    - wfpscripts.homeunix.com
+    - cdn-ampproject.com
+    - danviet.vn
+    - cdnscr.thruhere.net
+    - io.blogsite.org
+    - danviethouston.com
+    - your-ip.getmyip.com
+    - fvpoc.org
+    - gui.dnsdojo.net
+    - cdnazure.com
+    - gardencityclub.com
+    - figbc.knowsitall.info
+    - ichefbcci.is-a-chef.com
+    - lienketqnhn.org
+    - tips-renew.webhop.info
+    - cyhire.cechire.com
+    - mfaic.gov.kh
+    - tcog.thruhere.net
+    - weblink.selfip.info
+    - mfaic.gov.kh
+    - s0-2mdn.net
+    - p-typekit.com
+    - mod.gov.kh
+    - static.tagscdn.com
+    - pagefairjs.com
+    - mtgvinh.net
+    - metacachecdn.com
+    - bootstraplink.com
+    - nguoitieudung.com.vn
+    - s-adroll.com
+    - player-cnevids.com
+    - phnompenhpost.com
+    - tiwimg.com
+    - tiqqcdn.com
+    - raovatcalitoday.com
+    - widgets-wp.com
+    - cdn-tynt.com
+    - thongtinchongphandong.com
+    - lb-web-stat.com
+    - benchtag2.com
+    - tinkhongle.com
+    - cdn1.shacknet.us
+    - scdn-cxense.com
+    - toithichdoc.blogspot.com
+    - assets-cdn.blogdns.net
+    - cart.gotdns.com
+    - trieudaiviet.com
+    - html5.endofinternet.net
+    - effecto-azureedge.net
+    - triviet.news
+    - ds-aksb-a.likescandy.com
+    - labs-apnic.net
+    - pixel1.dnsalias.net
+    - ad-appier.com
+    - trc.webhop.net
+    - static-addtoany.com
+    - nav.neat-url.com
+    - straits-times.is-an-actor.com
+  condition: selection or selectionSRC or selectionDST or selectionURL
+fields:
+- source.ip
+- destination.ip
+- Hashes
+falsepositives:
+- Unknown
+level: high
+tags:
+- attack.Execution
+- attack.t1064
+- attack.Command and Control
+- attack.t1071
